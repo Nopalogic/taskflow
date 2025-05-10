@@ -17,7 +17,6 @@ use Laravel\Sanctum\PersonalAccessToken;
 class AuthController extends Controller
 {
     private const TOKEN_NAME = 'auth-token';
-    private const DEFAULT_USER_ROLE = 'user';
 
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -34,7 +33,6 @@ class AuthController extends Controller
                 'last_name' => $request->last_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => self::DEFAULT_USER_ROLE,
             ]);
 
             $user = User::where('email', $request->email)->first();
