@@ -11,13 +11,41 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as URouteImport } from './routes/u/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as UIndexImport } from './routes/u/index'
+import { Route as AuthRegisterImport } from './routes/auth/register'
+import { Route as AuthLoginImport } from './routes/auth/login'
 
 // Create/Update Routes
+
+const URouteRoute = URouteImport.update({
+  id: '/u',
+  path: '/u',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UIndexRoute = UIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => URouteRoute,
+} as any)
+
+const AuthRegisterRoute = AuthRegisterImport.update({
+  id: '/auth/register',
+  path: '/auth/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -32,39 +60,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/u': {
+      id: '/u'
+      path: '/u'
+      fullPath: '/u'
+      preLoaderRoute: typeof URouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/register': {
+      id: '/auth/register'
+      path: '/auth/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterImport
+      parentRoute: typeof rootRoute
+    }
+    '/u/': {
+      id: '/u/'
+      path: '/'
+      fullPath: '/u/'
+      preLoaderRoute: typeof UIndexImport
+      parentRoute: typeof URouteImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface URouteRouteChildren {
+  UIndexRoute: typeof UIndexRoute
+}
+
+const URouteRouteChildren: URouteRouteChildren = {
+  UIndexRoute: UIndexRoute,
+}
+
+const URouteRouteWithChildren =
+  URouteRoute._addFileChildren(URouteRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/u': typeof URouteRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
+  '/u/': typeof UIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
+  '/u': typeof UIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/u': typeof URouteRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
+  '/u/': typeof UIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/u' | '/auth/login' | '/auth/register' | '/u/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth/login' | '/auth/register' | '/u'
+  id: '__root__' | '/' | '/u' | '/auth/login' | '/auth/register' | '/u/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  URouteRoute: typeof URouteRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  URouteRoute: URouteRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +161,30 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/u",
+        "/auth/login",
+        "/auth/register"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/u": {
+      "filePath": "u/route.tsx",
+      "children": [
+        "/u/"
+      ]
+    },
+    "/auth/login": {
+      "filePath": "auth/login.tsx"
+    },
+    "/auth/register": {
+      "filePath": "auth/register.tsx"
+    },
+    "/u/": {
+      "filePath": "u/index.tsx",
+      "parent": "/u"
     }
   }
 }
