@@ -3,49 +3,48 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Project\StoreProjectRequest;
-use App\Http\Requests\Project\UpdateProjectRequest;
-use App\Models\Project;
+use App\Http\Requests\Task\StoreTaskRequest;
+use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
-class ProjectController extends Controller
+class TaskController extends Controller
 {
     public function index(): JsonResponse
     {
         try {
-            $projects = Project::latest()->get();
+            $tasks = Task::latest()->get();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Projects retrieved successfully.',
-                'data' => $projects
+                'message' => 'Tasks retrieved successfully.',
+                'data' => $tasks
             ], 200);
         } catch (\Exception $e) {
-            Log::error('Project index error:' . $e->getMessage());
+            Log::error('Task index error:' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to retrieve projects.',
+                'message' => 'Failed to retrieve tasks.',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function store(StoreProjectRequest $request): JsonResponse
+    public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
-            Project::create($request->all());
+            task::create($request->all());
 
             return response()->json([
                 'success' => true,
-                'message' => 'Project created successfully.',
+                'message' => 'task created successfully.',
             ], 201);
         } catch (\Exception $e) {
-            Log::error('Project store error: ' . $e->getMessage());
+            Log::error('task store error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create project.',
+                'message' => 'Failed to create task.',
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -54,54 +53,54 @@ class ProjectController extends Controller
     public function show(String $id): JsonResponse
     {
         try {
-            $project = Project::with('task')->find($id);
+            $task = Task::find($id);
 
-            if (!$project) {
+            if (!$task) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Project not found.',
+                    'message' => 'task not found.',
                 ], 404);
             }
 
             return response()->json([
                 'success' => true,
-                'message' => 'Project retrieved successfully.',
-                'data' => $project
+                'message' => 'Task retrieved successfully.',
+                'data' => $task
             ], 200);
         } catch (\Exception $e) {
-            Log::error('Project show error: ' . $e->getMessage());
+            Log::error('Task show error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to retrieved project',
+                'message' => 'Failed to retrieved task',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function update(UpdateProjectRequest $request, String $id): JsonResponse
+    public function update(UpdateTaskRequest $request, String $id): JsonResponse
     {
         try {
-            $project = Project::find($id);
+            $task = Task::find($id);
 
-            if (!$project) {
+            if (!$task) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Project not found.',
+                    'message' => 'task not found.',
                 ], 404);
             }
 
-            $project->update($request->all());
+            $task->update($request->all());
 
             return response()->json([
                 'success' => true,
-                'message' => 'Project updated successfully.',
-                'data' => $project
+                'message' => 'Task updated successfully.',
+                'data' => $task
             ], 200);
         } catch (\Exception $e) {
-            Log::error('Project update error: ' . $e->getMessage());
+            Log::error('Task update error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update project',
+                'message' => 'Failed to update task',
                 'error' => $e->getMessage()
             ], 500);
         }
@@ -110,26 +109,26 @@ class ProjectController extends Controller
     public function destroy(String $id): JsonResponse
     {
         try {
-            $project = Project::find($id);
+            $task = Task::find($id);
 
-            if (!$project) {
+            if (!$task) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Project not found.',
+                    'message' => 'Task not found.',
                 ], 404);
             }
 
-            $project->delete();
+            $task->delete();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Project moved to trash successfully.',
+                'message' => 'Task moved to trash successfully.',
             ], 200);
         } catch (\Exception $e) {
-            Log::error('Project destroy error: ' . $e->getMessage());
+            Log::error('Task destroy error: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete project.',
+                'message' => 'Failed to delete task.',
                 'error' => $e->getMessage()
             ], 500);
         }
