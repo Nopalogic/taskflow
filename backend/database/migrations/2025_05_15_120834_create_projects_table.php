@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->enum('status', ['not_started','in_progress', 'completed', 'archived'])->default('not_started');
             $table->longText('note')->nullable();
             $table->timestamps();
             $table->softDeletes();

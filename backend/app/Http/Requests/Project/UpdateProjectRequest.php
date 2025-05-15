@@ -17,18 +17,6 @@ class UpdateProjectRequest extends FormRequest
     }
 
     /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation()
-    {
-        if (!$this->has('status')) {
-            $this->merge([
-                'status' => 'active'
-            ]);
-        }
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -41,7 +29,6 @@ class UpdateProjectRequest extends FormRequest
             'description' => 'nullable|string|max:255',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
-            'status' => 'sometimes|in:active,completed,archived',
             'note' => 'nullable',
         ];
     }
@@ -61,7 +48,6 @@ class UpdateProjectRequest extends FormRequest
             'description.max' => 'The description may not be greater than 255 characters.',
             'start_date.date' => 'The start date must be a valid date.',
             'end_date.date' => 'The end date must be a valid date.',
-            'status.in' => 'The selected status is invalid. Valid options are: active, completed, archived.',
         ];
     }
 

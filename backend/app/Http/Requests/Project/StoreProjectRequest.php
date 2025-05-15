@@ -29,7 +29,6 @@ class StoreProjectRequest extends FormRequest
             'description' => 'nullable|string|max:255',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date',
-            'status' => 'sometimes|in:active,completed,archived',
             'note' => 'nullable',
         ];
     }
@@ -45,7 +44,6 @@ class StoreProjectRequest extends FormRequest
             'description.max' => 'The description may not be greater than 255 characters.',
             'start_date.date' => 'The start date must be a valid date.',
             'end_date.date' => 'The end date must be a valid date.',
-            'status.in' => 'The selected status is invalid. Valid options are: active, completed, archived.',
         ];
     }
 
