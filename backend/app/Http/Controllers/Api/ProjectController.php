@@ -8,6 +8,7 @@ use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
@@ -110,7 +111,7 @@ class ProjectController extends Controller
     public function destroy(String $id): JsonResponse
     {
         try {
-            $project = Project::find($id);
+            $project = Project::with('task')->find($id);
 
             if (!$project) {
                 return response()->json([
@@ -119,7 +120,10 @@ class ProjectController extends Controller
                 ], 404);
             }
 
-            $project->delete();
+            DB::transaction(function () use ($project) {
+                $project->task()->delete();
+                $project->delete();
+            });
 
             return response()->json([
                 'success' => true,
