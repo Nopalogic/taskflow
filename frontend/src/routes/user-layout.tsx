@@ -1,11 +1,7 @@
 import { AuthenticatedRoute } from "@/components/auth-route";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { Outlet } from "react-router";
 
-export const Route = createFileRoute("/u")({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
+export default function UserLayout() {
   return (
     <AuthenticatedRoute allowedRoles={["user", "admin"]}>
       <Outlet />

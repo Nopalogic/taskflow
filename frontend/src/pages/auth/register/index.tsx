@@ -8,8 +8,8 @@ import { registerUser } from "@/services/auth";
 import { useAuthStore } from "@/stores/auth";
 import { registerSchema } from "@/validators/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { z } from "zod";
 
 type FormValues = z.infer<typeof registerSchema>;
@@ -42,22 +42,22 @@ export default function RegisterPage() {
           title: "Registration successfully!",
         });
         login(response.token, response.data);
-        navigate({ to: "/u" });
+        navigate("/u");
       }
     } catch (error) {
       toast({
         variant: "destructive",
-        title: error instanceof Error ? error.message : "Submission failed",
+        title: error instanceof Error ? error.message : "Register failed",
       });
     }
   };
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
-      <div className="w-full max-w-sm md:max-w-3xl">
+      <div>
         <div className="flex flex-col gap-6">
           <Card className="overflow-hidden">
-            <CardContent className="grid p-0 md:grid-cols-2">
+            <CardContent>
               <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-6">
                   <div className="flex flex-col items-center text-center">

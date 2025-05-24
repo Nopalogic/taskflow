@@ -1,12 +1,8 @@
 import { logoutUser } from "@/services/auth";
 import { useAuthStore } from "@/stores/auth";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "react-router";
 
-export const Route = createFileRoute("/u/")({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
+export default function Dashboard() {
   const navigate = useNavigate();
   const { logout } = useAuthStore();
 
@@ -14,14 +10,16 @@ function RouteComponent() {
     const response = await logoutUser();
     if (response.success) {
       logout();
-      navigate({ to: "/auth/login" });
+      navigate("/auth/login");
     }
   };
 
   return (
     <div className="p-3">
       <div>Hello "/u/"!</div>
-      <button className="px-2 py-1 border rounded-sm" onClick={handleLogout}>Logout</button>
+      <button className="rounded-sm border px-2 py-1" onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 }

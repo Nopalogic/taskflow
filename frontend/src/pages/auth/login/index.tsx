@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import FormField from "@/components/form-field";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +9,6 @@ import { loginUser } from "@/services/auth";
 import { useAuthStore } from "@/stores/auth";
 import { loginSchema } from "@/validators/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -36,12 +36,12 @@ export default function LoginPage() {
 
       if (response.success) {
         login(response.token, response.data);
-        navigate({ to: "/u" });
+        navigate("/u");
       }
     } catch (error) {
       toast({
         variant: "destructive",
-        title: error instanceof Error ? error.message : "Submission failed",
+        title: error instanceof Error ? error.message : "Login failed",
       });
     }
   };
