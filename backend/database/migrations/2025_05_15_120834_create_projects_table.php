@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->date('timeline_from')->nullable();
+            $table->date('timeline_to')->nullable();
+            $table->enum('priority', ['low', 'medium', 'high'])->nullable();
+            $table->boolean('archive')->default(false);
             $table->longText('note')->nullable();
             $table->timestamps();
             $table->softDeletes();

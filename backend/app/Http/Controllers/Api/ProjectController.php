@@ -16,7 +16,7 @@ class ProjectController extends Controller
     public function index(): JsonResponse
     {
         try {
-            $projects = Project::where('user_id', Auth::id())->latest()->get();
+            $projects = Project::with('tasks')->where('user_id', Auth::id())->latest()->get();
 
             return response()->json([
                 'success' => true,
@@ -36,7 +36,15 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request): JsonResponse
     {
         try {
-            Project::create($request->all());
+            Project::create([
+                'user_id' => Auth::id(),
+                'title' => $request->title,
+                'description' => $request->description,
+                'timeline_from' => $request->timeline['from'],
+                'timeline_to' => $request->timeline['to'],
+                'priority' => $request->priority,
+                'note' => $request->note,
+            ]);
 
             return response()->json([
                 'success' => true,
@@ -55,7 +63,7 @@ class ProjectController extends Controller
     public function show(String $id): JsonResponse
     {
         try {
-            $project = Project::with('task')->find($id);
+            $project = Project::with('tasks')->find($id);
 
             if (!$project) {
                 return response()->json([
@@ -111,7 +119,7 @@ class ProjectController extends Controller
     public function destroy(String $id): JsonResponse
     {
         try {
-            $project = Project::with('task')->find($id);
+            $project = Project::with('tasks')->find($id);
 
             if (!$project) {
                 return response()->json([
@@ -121,7 +129,7 @@ class ProjectController extends Controller
             }
 
             DB::transaction(function () use ($project) {
-                $project->task()->delete();
+                $project->tasks()->delete();
                 $project->delete();
             });
 

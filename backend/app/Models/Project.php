@@ -17,15 +17,18 @@ class Project extends Model
         'user_id',
         'title',
         'description',
-        'start_date',
-        'end_date',
+        'timeline_from',
+        'timeline_to',
         'status',
-        'note',
+        'priority',
+        'archive',
+        'note'
     ];
 
     protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'timeline_from' => 'date',
+        'timeline_to' => 'date',
+        'archive' => 'boolean',
     ];
 
     public function user()
@@ -33,7 +36,7 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function task()
+    public function tasks()
     {
         return $this->hasMany(Task::class);
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
@@ -34,7 +35,15 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request): JsonResponse
     {
         try {
-            task::create($request->all());
+            task::create([
+                'project_id' => $request->project_id,
+                'user_id' => Auth::id(),
+                'title' => $request->title,
+                'description' => $request->description,
+                'due_date' => $request->due_date,
+                'priority' => $request->priority,
+                'status' => $request->status,
+            ]);
 
             return response()->json([
                 'success' => true,
