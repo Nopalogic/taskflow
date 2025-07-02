@@ -24,7 +24,7 @@ class StoreProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|string',
+            // 'user_id' => 'required|string',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'start_date' => 'nullable|date',
@@ -36,7 +36,7 @@ class StoreProjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'The user ID field is required.',
+            // 'user_id.required' => 'The user ID field is required.',
             'title.required' => 'The title field is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title may not be greater than 255 characters.',

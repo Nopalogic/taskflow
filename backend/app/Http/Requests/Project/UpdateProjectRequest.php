@@ -24,7 +24,7 @@ class UpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'sometimes|string',
+            // 'user_id' => 'sometimes|string',
             'title' => 'sometimes|string|max:255',
             'description' => 'nullable|string|max:255',
             'start_date' => 'nullable|date',
@@ -41,7 +41,7 @@ class UpdateProjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'The user ID field is required.',
+            // 'user_id.required' => 'The user ID field is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title may not be greater than 255 characters.',
             'description.string' => 'The description must be a string.',

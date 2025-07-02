@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignUuid('project_id')->references('id')->on('projects')->cascadeOnDelete();
             $table->foreignUuid('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('title');
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
             $table->date('due_date')->nullable();
             $table->enum('status', ['todo', 'in_progress', 'completed'])->default('todo');
             $table->enum('priority', ['low', 'medium', 'high'])->nullable();

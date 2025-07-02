@@ -1,6 +1,5 @@
-import { Navigate } from "@tanstack/react-router";
-
 import { useAuthStore } from "@/stores/auth";
+import { Navigate } from "react-router";
 
 export function AuthenticatedRoute({
   children,

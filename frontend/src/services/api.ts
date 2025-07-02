@@ -31,15 +31,6 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const { status } = error.response;
-
-    if (status === 401) {
-      localStorage.removeItem("taskflow-token");
-      window.location.href = "/auth/login";
-    } else if ([403, 404].includes(status)) {
-      window.location.href = "/u";
-    }
-
     return Promise.reject(error);
   },
 );

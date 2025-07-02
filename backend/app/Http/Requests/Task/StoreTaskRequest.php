@@ -25,7 +25,6 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'project_id' => 'required|string',
-            'user_id' => 'required|string',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
             'due_date' => 'nullable|date',
@@ -37,13 +36,12 @@ class StoreTaskRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'The user ID field is required.',
             'title.required' => 'The title field is required.',
             'title.string' => 'The title must be a string.',
             'title.max' => 'The title may not be greater than 255 characters.',
             'description.string' => 'The description must be a string.',
             'description.max' => 'The description may not be greater than 255 characters.',
-            'due_date.date' => 'The end date must be a valid date.',
+            'due_date.date' => 'The due date must be a valid date.',
             'status.in' => 'The selected status is invalid. Valid options are: todo, in_progress, completed.',
             'priority.in' => 'The selected status is invalid. Valid options are: low, medium, high.',
         ];
