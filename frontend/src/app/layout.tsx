@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -19,10 +20,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} antialiased`}
-      >
+      <body className={`${inter.variable} antialiased`}>
         {children}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            classNames: {
+              info: "!border-blue-200 !bg-blue-50 !text-blue-800 [&_svg]:!text-blue-600 [&>*>_svg]:!text-blue-600",
+              success:
+                "!border-green-200 !bg-green-50 !text-green-800 [&_svg]:!text-green-600 [&>*>_svg]:!text-green-600",
+              warning:
+                "!border-yellow-200 !bg-yellow-50 !text-yellow-800 [&_svg]:!text-yellow-600 [&>*>_svg]:!text-yellow-600",
+              error:
+                "!border-red-200 !bg-red-50 !text-red-800 [&_svg]:!text-red-600 [&>*>_svg]:!text-red-600",
+            },
+          }}
+        />
       </body>
     </html>
   );
