@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_BETTER_AUTH_TOKEN_KEY } from "@/features/auth/contants/local-storage";
+import { LOCAL_STORAGE_BETTER_AUTH_TOKEN_KEY } from "@/features/auth/constants/local-storage";
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
