@@ -16,4 +16,5 @@ export const auth = betterAuth({
   },
   trustedOrigins: [process.env.NEXT_CLIENT_URL ?? 'http://localhost:3000'],
   plugins: [bearer()],
+  hooks: {},
 });

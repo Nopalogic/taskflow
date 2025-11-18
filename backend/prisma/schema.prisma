@@ -78,6 +78,7 @@ model Verification {
 model Workspace {
   id          String   @id @default(cuid())
   name        String
+  description String?
   ownerId     String
   owner       User     @relation(fields: [ownerId], references: [id])
   createdAt   DateTime @default(now())
