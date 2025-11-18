@@ -12,13 +12,16 @@ import { authClient } from "@/lib/auth-client";
 import { ComponentProps } from "react";
 import { NavItems } from "./nav-items";
 import { NavUser } from "./nav-user";
+import { WorkspaceSwitcher } from "@/features/workspace/components/workspace-switcher";
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const { data: authData } = authClient.useSession();
 
   return (
     <Sidebar {...props}>
-      <SidebarHeader></SidebarHeader>
+      <SidebarHeader>
+        <WorkspaceSwitcher />
+      </SidebarHeader>
       <SidebarContent>
         <NavItems items={NAV_ITEMS} />
       </SidebarContent>
