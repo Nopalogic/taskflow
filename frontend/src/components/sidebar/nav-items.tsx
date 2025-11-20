@@ -2,17 +2,20 @@
 
 import {
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ElementType } from "react";
+import React, { ElementType } from "react";
 
 export function NavItems({
+  title,
   items,
 }: {
+  title?: React.ReactNode;
   items: {
     title: string;
     url: string;
@@ -22,6 +25,7 @@ export function NavItems({
   const pathname = usePathname();
   return (
     <SidebarGroup>
+      {title && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
       <SidebarMenu>
         {items.map((item) => {
           const key = `${item.title}-${item.url}`;

@@ -8,11 +8,12 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NAV_ITEMS } from "@/constants/nav-items";
+import { WorkspaceSwitcher } from "@/features/workspace/components/workspace-switcher";
 import { authClient } from "@/lib/auth-client";
 import { ComponentProps } from "react";
 import { NavItems } from "./nav-items";
 import { NavUser } from "./nav-user";
-import { WorkspaceSwitcher } from "@/features/workspace/components/workspace-switcher";
+import { ProjectItems } from "@/features/project/components/project-items";
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const { data: authData } = authClient.useSession();
@@ -24,6 +25,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavItems items={NAV_ITEMS} />
+        <ProjectItems />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={authData?.user} />
