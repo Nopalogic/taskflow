@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,32 +17,38 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useProjectForm } from "../../hooks/use-create";
+import { DialogProps } from "../../types";
 import { Controller } from "react-hook-form";
-import { useWorkspaceForm } from "../hooks/use-create";
+import { useProjectDialogs } from "../../stores/use-project-dialog";
 
-export function WorkspaceDialog({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const { form, onSubmit } = useWorkspaceForm({
-    onSuccess: () => onOpenChange(false),
+export function CreateProjectDialog({ open, onOpenChange }: DialogProps) {
+  const { clearState } = useProjectDialogs();
+  const { form, onSubmit } = useProjectForm({
+    onSuccess: () => {
+      onOpenChange(false);
+      clearState();
+    },
   });
 
+  const handleClose = () => {
+    onOpenChange(false);
+    clearState();
+    form.reset();
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <form id="create-workspace-form" onSubmit={form.handleSubmit(onSubmit)}>
+    <Dialog open={open} onOpenChange={handleClose}>
+      <form id="create-project-form" onSubmit={form.handleSubmit(onSubmit)}>
         <DialogContent
-          className="sm:max-w-[425px]"
+          className="max-w-[425px] md:max-w-xl"
           onInteractOutside={(event) => event.preventDefault()}
         >
           <DialogHeader>
-            <DialogTitle>Create workspace</DialogTitle>
+            <DialogTitle>Create project</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
+              Projects allow you to organize tasks, notes, and team
+              collaboration in one place.
             </DialogDescription>
           </DialogHeader>
           <FieldGroup className="gap-2">
@@ -61,38 +69,15 @@ export function WorkspaceDialog({
                 </Field>
               )}
             />
-            <Controller
-              name="description"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid} className="grid gap-3">
-                  <FieldLabel htmlFor={field.name}>
-                    Description (optional)
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id={field.name}
-                    aria-invalid={fieldState.invalid}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
           </FieldGroup>
           <DialogFooter>
             <DialogClose asChild>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => form.reset()}
-              >
+              <Button type="button" variant="outline">
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" form="create-workspace-form">
-              Create workspace
+            <Button type="submit" form="create-project-form">
+              Create project
             </Button>
           </DialogFooter>
         </DialogContent>

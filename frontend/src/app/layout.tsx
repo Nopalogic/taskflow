@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { QueryProvider } from "@/components/layout/provider/query-provider";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
@@ -20,11 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${interTight.variable} antialiased`}
-      >
-        {children}
-        <Toaster
+      <body className={`${interTight.variable} antialiased`}>
+        <QueryProvider>
+          {children}
+          <Toaster
             position="top-right"
             toastOptions={{
               classNames: {
@@ -38,6 +38,7 @@ export default function RootLayout({
               },
             }}
           />
+        </QueryProvider>
       </body>
     </html>
   );
