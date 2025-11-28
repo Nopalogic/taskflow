@@ -6,6 +6,11 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
+  app.enableCors({
+    credentials: true,
+    origin: process.env.NEXT_CLIENT_URL ?? 'http://localhost:3000',
+  });
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
