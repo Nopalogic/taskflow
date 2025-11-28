@@ -4,8 +4,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { LOCAL_STORAGE_BETTER_AUTH_TOKEN_KEY } from "../constants/local-storage";
 import { SignUpFormValues, SignUpSchema } from "../validations/sign-up";
+import { useWorkspaceStore } from "@/features/workspace/stores/workspace-store";
 
 export const useSignUpForm = () => {
+  const { initializeUserWorkspace } = useWorkspaceStore();
   const form = useForm<SignUpFormValues>({
     defaultValues: {
       name: "",
@@ -37,6 +39,8 @@ export const useSignUpForm = () => {
           LOCAL_STORAGE_BETTER_AUTH_TOKEN_KEY,
           authResponseData.token,
         );
+
+        initializeUserWorkspace();
 
         toast.success(`Hello, ${authResponseData.user.name.split(" ")[0]}`, {
           description: "We're glad you're here.",
