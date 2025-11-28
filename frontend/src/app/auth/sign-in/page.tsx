@@ -1,1 +1,1 @@
-export { default } from '@/features/pages/sign-in';
+export { default } from '@/features/auth/pages/sign-in';

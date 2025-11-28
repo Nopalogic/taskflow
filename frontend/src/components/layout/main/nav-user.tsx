@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ChevronsUpDown, LogOut } from "lucide-react";
 import { useState } from "react";
-import { SignOutDialog } from "@/features/components/sign-out-dialog";
+import { SignOutDialog } from "@/features/auth/components/sign-out-dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type UserData = {
