@@ -1,0 +1,19 @@
+"use client";
+
+import { authClient } from "@/lib/auth-client";
+import { SignUpForm } from "../components/sign-up-form";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function SignUpPage() {
+  const { data: session } = authClient.useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.replace("/u");
+    }
+  }, [router, session]);
+
+  return <SignUpForm />;
+}
